@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧生产安全管理系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background-color: #1a56db;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .header .time {
+            font-size: 14px;
+        }
+        
+        .nav-tabs {
+            background-color: #1a56db;
+            padding: 0 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-tab {
+            padding: 10px 20px;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px 4px 0 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .nav-tab.active {
+            background-color: white;
+            color: #1a56db;
+            font-weight: bold;
+        }
+        
+        .nav-tab:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .nav-tab.active:hover {
+            background-color: white;
+        }
+        
+        .content {
+            flex: 1;
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background-color: #e6efff;
+        }
+        
+        .left-section {
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .chart-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chart-container h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #1a56db;
+        }
+        
+        .chart {
+            height: 200px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart canvas {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .detection-images {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .detection-image {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .detection-image h4 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .detection-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        
+        .center-section {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: relative;
+        }
+        
+        .factory-layout {
+            width: 100%;
+            height: 100%;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .factory-layout img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .factory-layout .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .factory-layout .overlay h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .right-section {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .alerts-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .alerts-container h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #1a56db;
+        }
+        
+        .alert-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .alert-table th,
+        .alert-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 12px;
+        }
+        
+        .alert-table th {
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+        
+        .alert-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .camera-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .camera-container h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #1a56db;
+        }
+        
+        .camera-feed {
+            background-color: #000;
+            border-radius: 4px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .attendance-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .attendance-container h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #1a56db;
+        }
+        
+        .attendance-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .attendance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .attendance-item .label {
+            font-size: 14px;
+        }
+        
+        .attendance-item .value {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .attendance-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        .attendance-bar .fill {
+            height: 100%;
+            background-color: #1a56db;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            background-color: #1a56db;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1a56db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: #0f348a;
+            transform: translateY(-2px);
+        }
+        
+        .btn-block {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>智慧生产安全管理系统</h1>
+            <div class="time" id="currentTime"></div>
+        </div>
+        
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab active">温湿度显示</a>
+            <a href="helmet-detection.html" class="nav-tab">安全帽检测</a>
+            <a href="fire-detection.html" class="nav-tab">消防检测</a>
+            <a href="corrosion-detection.html" class="nav-tab">腐蚀检测</a>
+            <div class="nav-tab">实时警报</div>
+            <div class="nav-tab">人数考勤</div>
+        </div>
+        
+        <div class="content">
+            <div class="left-section">
+                <div class="chart-container">
+                    <h3>温湿度</h3>
+                    <div class="chart">
+                        <canvas id="tempHumidityChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="detection-images">
+                    <div class="detection-image">
+                        <h4>安全帽检测图</h4>
+                        <img src="https://via.placeholder.com/300x200?text=安全帽检测" alt="安全帽检测">
+                    </div>
+                    <div class="detection-image">
+                        <h4>消防检测图</h4>
+                        <img src="https://via.placeholder.com/300x200?text=消防检测" alt="消防检测">
+                    </div>
+                    <div class="detection-image">
+                        <h4>腐蚀检测图</h4>
+                        <img src="https://via.placeholder.com/300x200?text=腐蚀检测" alt="腐蚀检测">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="center-section">
+                <div class="factory-layout">
+                    <img src="https://via.placeholder.com/800x500?text=工厂布局图" alt="工厂布局图">
+                </div>
+            </div>
+            
+            <div class="right-section">
+                <div class="alerts-container">
+                    <h3>实时警报</h3>
+                    <table class="alert-table">
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>时间</th>
+                                <th>位置</th>
+                                <th>备注</th>
+                                <th>处理情况</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2023/3/3</td>
+                                <td>10:15:25</td>
+                                <td>巡检点1</td>
+                                <td>XX异常</td>
+                                <td>处理中</td>
+                            </tr>
+                            <tr>
+                                <td>2023/9/6</td>
+                                <td>11:30:45</td>
+                                <td>巡检点2</td>
+                                <td>XX异常</td>
+                                <td>已处理</td>
+                            </tr>
+                            <tr>
+                                <td>2024/1/7</td>
+                                <td>13:55:10</td>
+                                <td>巡检点4</td>
+                                <td>XX异常</td>
+                                <td>处理中</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="camera-container">
+                    <h3>实拍显示</h3>
+                    <div class="camera-feed">
+                        <div>打开摄像头</div>
+                    </div>
+                </div>
+                
+                <div class="attendance-container">
+                    <h3>人数考勤</h3>
+                    <div class="attendance-stats">
+                        <div class="attendance-item">
+                            <span class="label">进场人数</span>
+                            <span class="value">5</span>
+                        </div>
+                        <div class="attendance-item">
+                            <span class="label">出场人数</span>
+                            <span class="value">3</span>
+                        </div>
+                        <div class="attendance-item">
+                            <span class="label">当前人数</span>
+                            <span class="value">2</span>
+                        </div>
+                        <div class="attendance-bar">
+                            <div class="fill" style="width: 87%;"></div>
+                        </div>
+                        <div style="text-align: right; font-size: 12px; color: #666;">87%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 智慧生产安全管理系统 | 基于YOLO模型</p>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // 更新当前时间
+        function updateCurrentTime() {
+            const now = new Date();
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                weekday: 'long'
+            };
+            document.getElementById('currentTime').textContent = `当前时间: ${now.toLocaleString('zh-CN', options)}`;
+        }
+        
+        // 初始化温湿度图表
+        function initTempHumidityChart() {
+            const ctx = document.getElementById('tempHumidityChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                    datasets: [
+                        {
+                            label: '温度 (℃)',
+                            data: [15, 18, 22, 25, 23, 19],
+                            borderColor: 'rgb(255, 99, 132)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                            tension: 0.4
+                        },
+                        {
+                            label: '湿度 (%)',
+                            data: [60, 55, 45, 40, 50, 55],
+                            borderColor: 'rgb(54, 162, 235)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 初始化页面
+        function initPage() {
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 1000);
+            initTempHumidityChart();
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>

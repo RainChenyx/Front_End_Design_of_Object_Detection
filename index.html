@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>智慧生产安全管理系统</title>
+    <title> 工防智联 | 智慧生产安全管理系统 </title>
     <style>
         * {
             margin: 0;
@@ -81,13 +81,14 @@
             gap: 20px;
             padding: 20px;
             background-color: #e6efff;
+            align-items: stretch;
         }
         
         .left-section {
             width: 25%;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 30px;
         }
         
         .chart-container {
@@ -127,7 +128,7 @@
         
         .detection-image {
             background-color: white;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -139,8 +140,10 @@
         }
         
         .detection-image img {
-            width: 100%;
+            width: 120%;
             height: auto;
+            max-height: 200px;
+            object-fit: contain;
             border-radius: 4px;
         }
         
@@ -155,42 +158,44 @@
         
         .factory-layout {
             width: 100%;
-            height: 100%;
+            min-height: 150px;
             background-color: #f9f9f9;
             border-radius: 4px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             position: relative;
+            padding: 10px;
         }
         
         .factory-layout img {
             max-width: 100%;
             max-height: 100%;
+            object-fit: contain;
         }
         
         .factory-layout .overlay {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 0%;
+            left: 0%;
             transform: translate(-50%, -50%);
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 20px;
+            padding: 00px;
             border-radius: 8px;
             text-align: center;
         }
         
         .factory-layout .overlay h3 {
             font-size: 18px;
-            margin-bottom: 10px;
+            margin-bottom: 0px;
         }
         
         .right-section {
             width: 30%;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 30px;
         }
         
         .alerts-container {
@@ -244,7 +249,7 @@
         .camera-feed {
             background-color: #000;
             border-radius: 4px;
-            height: 200px;
+            height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -351,32 +356,31 @@
         
         <div class="content">
             <div class="left-section">
+                <div class="detection-images">
+                    <div class="detection-image">
+                        <h4>安全帽检测图</h4>
+                        <img src="pictures/S1.png" alt="安全帽检测">
+                    </div>
+                    <div class="detection-image">
+                        <h4>消防检测图</h4>
+                        <img src="pictures/F1.jpg" alt="消防检测">
+                    </div>
+                    <div class="detection-image">
+                        <h4>腐蚀检测图</h4>
+                        <img src="pictures/E1.png" alt="腐蚀检测">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="center-section">
                 <div class="chart-container">
                     <h3>温湿度</h3>
                     <div class="chart">
                         <canvas id="tempHumidityChart"></canvas>
                     </div>
                 </div>
-                
-                <div class="detection-images">
-                    <div class="detection-image">
-                        <h4>安全帽检测图</h4>
-                        <img src="https://via.placeholder.com/300x200?text=安全帽检测" alt="安全帽检测">
-                    </div>
-                    <div class="detection-image">
-                        <h4>消防检测图</h4>
-                        <img src="https://via.placeholder.com/300x200?text=消防检测" alt="消防检测">
-                    </div>
-                    <div class="detection-image">
-                        <h4>腐蚀检测图</h4>
-                        <img src="https://via.placeholder.com/300x200?text=腐蚀检测" alt="腐蚀检测">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="center-section">
-                <div class="factory-layout">
-                    <img src="https://via.placeholder.com/800x500?text=工厂布局图" alt="工厂布局图">
+                <div class="factory-layout" style="margin-top: 20px;">
+                    <img src="pictures/C1.png" alt="工厂布局图">
                 </div>
             </div>
             
@@ -422,7 +426,7 @@
                 <div class="camera-container">
                     <h3>实拍显示</h3>
                     <div class="camera-feed">
-                        <div>打开摄像头</div>
+                        <img src="pictures/M1.png" alt="实拍画面" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
                 
@@ -451,7 +455,7 @@
         </div>
         
         <div class="footer">
-            <p>© 2026 智慧生产安全管理系统 | 基于YOLO模型</p>
+            <p>© 2026 工防智联 | 智慧生产安全管理系统 </p>
         </div>
     </div>
     
